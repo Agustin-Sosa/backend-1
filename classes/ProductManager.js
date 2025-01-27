@@ -8,7 +8,7 @@ class ProductManager {
   }
 
   createFile() {
-    if (!fs.existsSync(this.products)) {
+    if (!fs.existsSync(this.file)) {
       fs.writeFileSync(this.file, JSON.stringify(this.products));
     }
   }
@@ -31,7 +31,7 @@ class ProductManager {
   }
 
   getProductsById(id) {
-    this.products = JSON.parse(fs.readFileSync(this.file, "utf-8"));
+    this.getProducts();
     let product = this.products.find((item) => item.id == id);
 
     return product ? product : { Error: "No se encontró el producto" };
