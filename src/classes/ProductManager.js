@@ -4,7 +4,7 @@ import fs from "fs";
 class ProductManager {
   constructor() {
     this.products = [];
-    (this.file = "products.json"), this.createFile();
+    (this.file = "productos.json"), this.createFile();
   }
 
   createFile() {
