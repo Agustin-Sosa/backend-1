@@ -4,20 +4,24 @@ import ProductManager from "../classes/ProductManager.js";
 const productsRouter = Router();
 const PM = new ProductManager();
 
-productsRouter.get("/", (req, res) => {
-  let products = PM.getProducts();
-  res.send(products);
+productsRouter.get("/", async (req, res) => {
+  try {
+    let products = await PM.getProducts();
+    res.send(products);
+  } catch (error) {
+    console.log("Error en obtener los productos");
+  }
 });
 
-productsRouter.get("/:pid", (req, res) => {
+productsRouter.get("/:pid", async (req, res) => {
   let pid = req.params.pid;
-  let product = PM.getProductsById(pid);
+  let product = await PM.getProductsById(pid);
   res.send(product);
 });
 
 //add
 
-productsRouter.post("/", (req, res) => {
+productsRouter.post("/", async (req, res) => {
   const { title, description, code, price, status, category, thumbnails } =
     req.body;
 
@@ -68,7 +72,7 @@ productsRouter.post("/", (req, res) => {
     category,
     thumbnails,
   };
-  PM.addProducts(product);
+  await PM.addProducts(product);
   res
     .status(200)
     .send({ estado: "OK", mensaje: "El producto se agregó con éxito" });
@@ -76,7 +80,7 @@ productsRouter.post("/", (req, res) => {
 
 //edit
 
-productsRouter.put("/:pid", (req, res) => {
+productsRouter.put("/:pid", async (req, res) => {
   let pid = req.params.pid;
   const { title, description, code, price, status, category, thumbnails } =
     req.body;
@@ -128,7 +132,7 @@ productsRouter.put("/:pid", (req, res) => {
     category,
     thumbnails,
   };
-  PM.editProducts(pid, product);
+  await PM.editProducts(pid, product);
   res
     .status(200)
     .send({ estado: "OK", mensaje: "El producto se modificó con éxito" });
@@ -136,9 +140,9 @@ productsRouter.put("/:pid", (req, res) => {
 
 //delete
 
-productsRouter.delete("/:pid", (req, res) => {
+productsRouter.delete("/:pid", async (req, res) => {
   let pid = req.params.pid;
-  PM.deleteProducts(pid);
+  await PM.deleteProducts(pid);
   res
     .status(200)
     .send({ estado: "OK", mensaje: "El producto se eliminó con éxito" });
