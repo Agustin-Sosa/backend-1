@@ -10,12 +10,10 @@ class ProductManager {
       let result;
 
       if (query) {
-        result = await productsModel
-          .paginate(
-            { category: query },
-            { limit: limit, page: page, sort: sort }
-          )
-          .lean();
+        result = await productsModel.paginate(
+          { category: query },
+          { limit: limit, page: page, sort: sort, lean: true }
+        );
       } else {
         result = await productsModel.paginate(
           {},
@@ -32,8 +30,12 @@ class ProductManager {
         page: result.page,
         hasPrevPage: result.hasPrevPage,
         hasNextPage: result.hasNextPage,
-        prevLink: result.hasPrevPage ? "link" : null,
-        nextLink: result.hasNextPage ? "link" : null,
+        prevLink: result.hasPrevPage
+          ? "/?limit=" + limit + "&page=" + (result.page - 1)
+          : null,
+        nextLink: result.hasNextPage
+          ? "/?limit=" + limit + "&page=" + (result.page + 1)
+          : null,
       };
 
       return result;

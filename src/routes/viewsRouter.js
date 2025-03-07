@@ -6,9 +6,9 @@ const PM = new ProductManager();
 
 viewsRouter.get("/", async (req, res) => {
   const { limit, page, query, sort } = req.query;
-  let result = await PM.getProducts(limit, page, query, sort);
+  let products = await PM.getProducts(limit, page, query, sort);
 
-  res.render("home", { result: result });
+  res.render("home", { products: products });
 });
 
 viewsRouter.get("/realtimeproducts", (req, res) => {

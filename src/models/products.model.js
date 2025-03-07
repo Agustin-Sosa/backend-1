@@ -9,6 +9,10 @@ const productsSchema = new mongoose.Schema({
   status: Boolean,
   category: String,
   thumbnails: Array,
+  carts: {
+    type: Array,
+    default: [],
+  },
 });
 
 productsSchema.plugin(mongoosePaginate);

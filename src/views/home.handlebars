@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
 
-    {{#each result.payload}}
+    {{#each products.payload}}
       <div class="col-md-3">
         <div class="card text-center">
           <img
@@ -16,6 +16,24 @@
         </div>
       </div>
     {{/each}}
-
+    <div class="row">
+      <div class="col text-center">
+        {{#if products.hasPrevPage}}
+          <a
+            href="{{products.prevLink}}"
+            class="text-decoration-none mx-3"
+          >Anterior</a>
+        {{/if}}
+        {{#if products.page}}
+          <a href="#" class="text-decoration-none mx-3">{{products.page}}</a>
+        {{/if}}
+        {{#if products.hasNextPage}}
+          <a
+            href="{{products.nextLink}}"
+            class="text-decoration-none mx-3"
+          >Posterior</a>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </div>
