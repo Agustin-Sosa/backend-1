@@ -15,6 +15,10 @@ const httpServer = app.listen(port, () => {
 });
 const socketServer = new Server(httpServer);
 
+handlebars.create().handlebars.registerHelper("stringify", function (context) {
+  return JSON.stringify(context, null, 2);
+});
+
 app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");

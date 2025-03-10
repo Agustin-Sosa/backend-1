@@ -27,14 +27,29 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
   res.send({ estado: "OK", mensaje: "Producto agregado al carrito con éxito" });
 });
 
+cartsRouter.put("/:cid", async (req, res) => {
+  const cid = req.params.cid;
+  const products = req.body;
+  await CM.addProductsToCart(cid, products);
+  res.send({ estado: "OK", mensaje: "Se actualizó el Carrito!" });
+});
+cartsRouter.put("/:cid/product/:pid", async (req, res) => {
+  const cid = req.params.cid;
+  const pid = req.params.pid;
+  const quantity = req.body.quantity;
+  await CM.updateProductFromCart(cid, pid, quantity);
+  res.send({ estado: "OK", mensaje: "Se actualizó el Carrito!" });
+});
 cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
   const cid = req.params.cid;
   const pid = req.params.pid;
   await CM.deleteProductFromCart(cid, pid);
-  res.send({
-    estado: "OK",
-    mensaje: "Producto eliminado del carrito con éxito",
-  });
+  res.send({ estado: "OK", mensaje: "Se eliminó el Producto del Carrito!" });
+});
+cartsRouter.delete("/:cid", async (req, res) => {
+  const cid = req.params.cid;
+  await CM.deleteProductsFromCart(cid);
+  res.send({ estado: "OK", mensaje: "Se vacío el Carrito!" });
 });
 
 export default cartsRouter;

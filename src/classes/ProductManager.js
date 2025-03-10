@@ -45,7 +45,7 @@ class ProductManager {
   }
 
   async getProductsById(id) {
-    let product = await productsModel.find({ _id: id });
+    let product = await productsModel.find({ _id: id }).lean();
     return product ? product : { Error: "No se encontró el producto" };
   }
 
